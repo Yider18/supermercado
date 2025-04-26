@@ -1,39 +1,53 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio</title>
+    <title>Inicio - App Market</title>
+    <link rel="stylesheet" href="{% static 'style/inicio.css' %}">
 </head>
 <body>
-    <header>
-        <h1>Supermercado</h1>
-        <nav>
-            <ul>
-                <li><a href="#">Inicio</a></li>
-                <li><a href="#">Acerca de</a></li>
-                <li><a href="#">Contacto</a></li>
-            </ul>
-        </nav>
-    </header>
-    
-    <main>
-        <section>
-            <h2>Sección Principal</h2>
-            <article>
-                <h3>Artículo 1</h3>
-                <p>Contenido del artículo...</p>
-            </article>
+    <div class="main-container">
+        <header class="header">
+            <a  class="logo">APP MARKET</a>
+            <nav class="nav-links">
+                <a href="#">Ingresar</a>
+                <a href="#">Registrarte</a>
+                <a href="{% url 'contacto' %}">Contacto</a>
+            </nav>
+        </header>
+
+        <section class="hero">
+            <h1>Bienvenido a App Market</h1>
+            <p>La mejor opcion en precio y calidad de alimentos</p>
+            <a class="btn">Frutas</a>
+            <a class="btn1">Bebidas</a>
+            <a class="btn2">Carnes</a>
+            <a class="btn3">cereales</a>
+            <a class="btn4">verduras</a>
         </section>
-        
-        <aside>
-            <h3>Barra lateral</h3>
-            <p>Información adicional...</p>
-        </aside>
-    </main>
-    
-    <footer>
-        <p>Derechos reservados &copy; 2023</p>
-    </footer>
+
+        <section class="features">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <h3></h3>
+                <p></p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-sync-alt"></i>
+                </div>
+                <h3></h3>
+                <p></p>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>&copy; 2025 App Market. Todos los derechos reservados.</p>
+        </footer>
+    </div>
 </body>
 </html>
