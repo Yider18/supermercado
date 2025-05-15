@@ -1,53 +1,50 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio - App Market</title>
-    <link rel="stylesheet" href="{% static 'style/inicio.css' %}">
-</head>
-<body>
-    <div class="main-container">
-        <header class="header">
-            <a  class="logo">APP MARKET</a>
-            <nav class="nav-links">
-                <a href="#">Ingresar</a>
-                <a href="#">Registrarte</a>
-                <a href="{% url 'contacto' %}">Contacto</a>
-            </nav>
-        </header>
 
-        <section class="hero">
-            <h1>Bienvenido a App Market</h1>
-            <p>La mejor opcion en precio y calidad de alimentos</p>
-            <a class="btn">Frutas</a>
-            <a class="btn1">Bebidas</a>
-            <a class="btn2">Carnes</a>
-            <a class="btn3">cereales</a>
-            <a class="btn4">verduras</a>
-        </section>
+<!-- templates/inicio.html -->
+{% extends "base.html" %}
 
-        <section class="features">
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-rocket"></i>
+{% block title %}Inicio - Sistema de Gestión{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <h1 class="display-4 mb-4">Bienvenido al Sistema de Gestión</h1>
+            <p class="lead">Selecciona una opción del menú lateral para comenzar</p>
+            
+            <div class="row mt-5">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <i class="bi bi-box-seam display-4 text-primary"></i>
+                            <h3 class="mt-3">Inventario</h3>
+                            <p>Gestiona tus productos y categorías</p>
+                        </div>
+                    </div>
                 </div>
-                <h3></h3>
-                <p></p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-sync-alt"></i>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <i class="bi bi-cart-check display-4 text-success"></i>
+                            <h3 class="mt-3">Pedidos</h3>
+                            <p>Administra tus pedidos a proveedores</p>
+                        </div>
+                    </div>
                 </div>
-                <h3></h3>
-                <p></p>
+                
+                {% if user.is_authenticated and user.es_administrador %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <i class="bi bi-people display-4 text-info"></i>
+                            <h3 class="mt-3">Usuarios</h3>
+                            <p>Administra los usuarios del sistema</p>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
             </div>
-        </section>
-
-        <footer class="footer">
-            <p>&copy; 2025 App Market. Todos los derechos reservados.</p>
-        </footer>
+        </div>
     </div>
-</body>
-</html>
+</div>
+{% endblock %}

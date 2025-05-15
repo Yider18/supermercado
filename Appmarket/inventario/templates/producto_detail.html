@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Detalle de Producto - {{ producto.nombre }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>{{ producto.nombre }}</h2>
+        <div>
+            <a href="{% url 'inventario:producto_list' %}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Volver
+            </a>
+            <a href="{% url 'inventario:producto_update' producto.pk %}" class="btn btn-primary">
+                <i class="bi bi-pencil"></i> Editar
+            </a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>Descripción:</strong></p>
+                    <p>{{ producto.descripcion|default:"Sin descripción" }}</p>
+                    
+                    <p><strong>Categoría:</strong> {{ producto.categoria|default:"-" }}</p>
+                    <p><strong>Estado:</strong> 
+                        <span class="badge bg-{% if producto.estado == 'ACTIVO' %}success{% else %}secondary{% endif %}">
+                            {{ producto.get_estado_display }}
+                        </span>
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Precio Unitario:</strong> ${{ producto.precio }}</p>
+                    <p><strong>Stock Actual:</strong> {{ producto.cantidad }}</p>
+                    <p><strong>Stock Mínimo:</strong> {{ producto.stock_minimo }}</p>
+                    {% if producto.fecha_vencimiento %}
+                    <p><strong>Fecha de Vencimiento:</strong> {{ producto.fecha_vencimiento|date:"d/m/Y" }}</p>
+                    {% if producto.proximo_a_vencer %}
+                    <span class="badge bg-danger">Próximo a vencer</span>
+                    {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <p><strong>Creado por:</strong> {{ producto.creado_por.get_full_name|default:"-" }}</p>
+                <p><strong>Fecha de creación:</strong> {{ producto.fecha_creacion|date:"d/m/Y H:i" }}</p>
+                <p><strong>Última actualización:</strong> {{ producto.fecha_actualizacion|date:"d/m/Y H:i" }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

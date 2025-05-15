@@ -1,0 +1,53 @@
+<div class="sidebar d-none d-lg-block">
+    <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link text-white" href="{% url 'inicio' %}">
+                    <i class="bi bi-speedometer2"></i> Dashboard
+                </a>
+            </li>
+            
+            <!-- Módulo de Inventario -->
+            <li class="nav-item mt-3">
+                <span class="nav-link text-white-50 small">INVENTARIO</span>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="{% url 'inventario:producto_list' %}">
+                    <i class="bi bi-box-seam"></i> Productos
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="{% url 'inventario:categoria_list' %}">
+                    <i class="bi bi-tags"></i> Categorías
+                </a>
+            </li>
+            
+            <!-- Módulo de Pedidos -->
+            <li class="nav-item mt-3">
+                <span class="nav-link text-white-50 small">PEDIDOS</span>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="{% url 'pedidos:pedido_list' %}">
+                    <i class="bi bi-cart-check"></i> Pedidos
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="{% url 'pedidos:proveedor_list' %}">
+                    <i class="bi bi-truck"></i> Proveedores
+                </a>
+            </li>
+            
+            <!-- Módulo de Usuarios (solo para administradores) -->
+            {% if user.is_authenticated and user.es_administrador %}
+            <li class="nav-item mt-3">
+                <span class="nav-link text-white-50 small">ADMINISTRACIÓN</span>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="{% url 'usuarios:usuario_list' %}">
+                    <i class="bi bi-people"></i> Usuarios
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>

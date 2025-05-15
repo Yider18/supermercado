@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}Sugerencias de Compra{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Sugerencias de Compra Inteligente</h2>
+        <a href="{% url 'inventario:producto_list' %}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> Volver al Inventario
+        </a>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <div class="d-flex justify-content-between align-items-center">
+                    <span>Productos sugeridos para reabastecimiento</span>
+                    <span class="badge bg-light text-dark">
+                        Total estimado: ${{ total_estimado|floatformat:2 }}
+                    </span>
+                </div>
+            </div>
+            
+            <div class="card-body">
+                {% if sugerencias %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th width="5%">
+                                    <input type="checkbox" id="select-all" class="form-check-input">
+                                </th>
+                                <th>Producto</th>
+                                <th>Motivo</th>
+                                <th>Proveedor Recomendado</th>
+                                <th>Cantidad Sugerida</th>
+                                <th>Precio Unitario</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for sug in sugerencias %}
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="seleccionados" 
+                                           value="{{ sug.producto.id }}" 
+                                           class="form-check-input">
+                                </td>
+                                <td>{{ sug.producto.nombre }}</td>
+                                <td>
+                                    <span class="badge bg-{% if sug.motivo == 'Stock bajo' %}warning{% else %}danger{% endif %}">
+                                        {{ sug.motivo }}
+                                    </span>
+                                </td>
+                                <td>
+                                    {{ sug.proveedor.nombre }}
+                                    {% if sug.es_nuevo %}
+                                    <span class="badge bg-info">Nuevo</span>
+                                    {% endif %}
+                                    <br>
+                                    <small class="text-muted">
+                                        Rating: {{ sug.proveedor.rating }}/5
+                                    </small>
+                                </td>
+                                <td>{{ sug.cantidad }}</td>
+                                <td>${{ sug.precio_unitario|floatformat:2 }}</td>
+                                <td>${{ sug.cantidad|mul:sug.precio_unitario|floatformat:2 }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="alert alert-info mb-0">
+                    No hay sugerencias de compra en este momento. Todos los productos tienen stock suficiente.
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        {% if sugerencias %}
+        <div class="d-flex justify-content-end gap-2">
+            <button type="submit" class="btn btn-success">
+                <i class="bi bi-cart-plus"></i> Crear Pedidos Seleccionados
+            </button>
+        </div>
+        {% endif %}
+    </form>
+</div>
+
+<script>
+    // Seleccionar/deseleccionar todos
+    document.getElementById('select-all').addEventListener('change', function(e) {
+        document.querySelectorAll('input[name="seleccionados"]').forEach(checkbox => {
+            checkbox.checked = e.target.checked;
+        });
+    });
+</script>
+{% endblock %}
